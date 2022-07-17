@@ -1,0 +1,8 @@
+{
+    "EVMUARoutes": {
+        "baseResource": "",
+        "routes": {
+            "automate": "/automate"
+        }
+    }
+}

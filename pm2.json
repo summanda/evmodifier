@@ -1,0 +1,48 @@
+{
+    "apps": [
+        {
+            "name": "EVModifierApp_API_PROD",
+            "script": "node ./build/index.js",
+            "max_memory_restart": "450M",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "error_file": "./logs/production/EVModifierApp_API/pm2/error/error.log",
+            "out_file": "./logs/production/EVModifierApp_API/pm2/out/out.log",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        },
+        {
+            "name": "EVModifierApp_SCHEDULER_PROD",
+            "script": "node ./build/scheduler.js",
+            "max_memory_restart": "450M",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "error_file": "../logs/production/EVModifierApp_SCHEDULER/pm2/error/error.log",
+            "out_file": "./logs/production/EVModifierApp_SCHEDULER/pm2/out/out.log",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        },
+        {
+            "name": "EVModifierApp_API_DEV",
+            "script": "node ./build/index.js",
+            "max_memory_restart": "450M",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "error_file": "./logs/development/EVModifierApp_API/pm2/error/error.log",
+            "out_file": "./logs/development/EVModifierApp_API/pm2/out/out.log",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "EVModifierApp_SCHEDULER_DEV",
+            "script": "node ./build/scheduler.js",
+            "max_memory_restart": "450M",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "error_file": "../logs/development/EVModifierApp_SCHEDULER/pm2/error/error.log",
+            "out_file": "./logs/development/EVModifierApp_SCHEDULER/pm2/out/out.log",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        }
+    ]
+}

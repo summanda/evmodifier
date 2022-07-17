@@ -1,0 +1,81 @@
+{
+  "name": "evmodifierapp",
+  "version": "1.0.0",
+  "description": "Node JS application to automate the process of calling API for updation of data in gridx.vehicle table according to the change in data at Fuel Economy portal",
+  "main": "./build/index.js",
+  "scripts": {
+    "build:prod": "tsc",
+    "start-api:first-time:prod": "pm2 start pm2.json --only EVModifierApp_API_PROD",
+    "start-scheduler:first-time:prod": "pm2 start pm2.json --only EVModifierApp_SCHEDULER_PROD",
+    "start-api:prod": "pm2 restart pm2.json --only EVModifierApp_API_PROD",
+    "start-scheduler:prod": "pm2 restart pm2.json --only EVModifierApp_SCHEDULER_PROD",
+    "build:dev": "tsc",
+    "start-node-api:dev": "NODE_ENV=development node ./build/index.js",
+    "start-node-scheduler:dev": "NODE_ENV=development  node ./build/scheduler.js",
+    "start-api:first-time:dev": "pm2 start pm2.json --only EVModifierApp_API_DEV",
+    "start-scheduler:first-time:dev": "pm2 start pm2.json --only EVModifierApp_SCHEDULER_DEV",
+    "start-api:dev": "pm2 restart pm2.json --only EVModifierApp_API_DEV",
+    "start-scheduler:dev": "pm2 restart pm2.json --only EVModifierApp_SCHEDULER_DEV",
+    "unit-test": "NODE_ENV=development mocha -r ts-node/register tests/**/*unit.test.ts",
+    "integration-test": "NODE_ENV=development mocha -r ts-node/register tests/**/*integration.test.ts",
+    "coverage": "NODE_ENV=development nyc -r lcov -e .ts -x \"*.test.ts\" mocha -r ts-node/register tests/**/*.test.ts"
+  },
+  "author": "suman.mandal@gridx.com",
+  "license": "ISC",
+  "dependencies": {
+    "@types/chai-http": "^4.2.0",
+    "@types/express": "^4.17.3",
+    "@types/fs-extra": "^8.1.0",
+    "@types/lodash": "^4.14.150",
+    "@types/mocha": "^7.0.2",
+    "@types/sinon": "^9.0.0",
+    "@types/winston": "^2.4.4",
+    "aws-sdk": "^2.1167.0",
+    "axios": "^0.27.2",
+    "chai-http": "^4.3.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "fs-extra": "^9.0.0",
+    "lodash": "^4.17.19",
+    "mocha": "^7.1.1",
+    "module-alias": "^2.2.2",
+    "node-schedule": "^2.1.0",
+    "nodemailer": "^6.7.6",
+    "path": "^0.12.7",
+    "pm2": "^5.2.0",
+    "sinon": "^9.0.2",
+    "winston": "^3.2.1"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@src": "build/src",
+    "@utils": "build/src/utils",
+    "@configs": "build/configs",
+    "@store": "build/store"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "chai": "^4.2.0",
+    "nyc": "^15.0.1",
+    "ts-jest": "^25.3.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
