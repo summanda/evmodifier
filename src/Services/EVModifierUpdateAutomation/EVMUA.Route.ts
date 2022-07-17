@@ -24,7 +24,9 @@ export class EVMUARouteController extends AbstractRouteController {
         try {
             this.router.post(routePath, Authentication.authenticate, async (req: Request, res: Response) => {
                 let response = await EVMUAServiceController.automateService(req, res);
-                res.status(StatusCodes.STATUS_200.code).send(response);
+                if (!res.headersSent) {
+                    res.status(StatusCodes.STATUS_200.code).send(response);
+                }
             });
         } catch (err) {
             Logger.error('Failed @EVMUA.Route.ts @EVMUARouteController - automateRoute');
