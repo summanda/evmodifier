@@ -38,14 +38,23 @@ export class EVMUAServiceController {
             let dateStore = new Date(lastUpdatedOn);
 
             if (dateSite.getTime() != dateStore.getTime()) {
-                const params = { user: req.body.email, email: req.body.email };
+                let result1;
+                let result2;
+                const params = { user: req.body.email };
                 if (Config.get(Constants.AKKA_API_ENABLED) == 'true') {
-                    let result1 = await HttpClient.get(Config.get(Constants.AKKA_API_UPDATE_VEHICLE_IN_MODEL_DB), { params: params });
-                    let result2 = await HttpClient.get(Config.get(Constants.AKKA_API_RELEASE_VEHICLE_TO_PROD_DB), { params: params });
+                    result1 = await HttpClient.get(Config.get(Constants.AKKA_API_UPDATE_VEHICLE_IN_MODEL_DB), { params: params });
+                    result2 = await HttpClient.get(Config.get(Constants.AKKA_API_RELEASE_VEHICLE_TO_PROD_DB), { params: params });
+                    await fs.writeFile(Config.get(Constants.STORAGE_URL), updatedOn);
                 }
-                await fs.writeFile(Config.get(Constants.STORAGE_URL), updatedOn);
-                if (Config.get(Constants.NOTIFICATION_EMAIL_ENABALED)) Mailer.send(EVMUAConstants.NOTIFICATION_EMAIL_BODY);
-                return ResponseBuilder.response({ newUpdatedDate: updatedOn }, EVMUAConstants.CHANGE_DETECTED);
+                if (Config.get(Constants.NOTIFICATION_EMAIL_ENABALED)) {
+                    // Mailer.send(EVMUAConstants.NOTIFICATION_EMAIL_BODY);
+                }
+                return ResponseBuilder.response(
+                    {
+                        AKKA_API_UPDATE_VEHICLE_IN_MODEL_DB_RESULT_STATUS: result1.status,
+                        AKKA_API_RELEASE_VEHICLE_TO_PROD_DB_STATUS: result2.status,
+                        newUpdatedDate: updatedOn
+                    }, EVMUAConstants.CHANGE_DETECTED);
             }
             else {
                 return ResponseBuilder.response(null, EVMUAConstants.NO_CHANGE_DETECTED);
